@@ -6,13 +6,14 @@ normalize <- function(x){
   return ((x - min(x))/(max(x) - min(x) ))
 }
 
-data <- h2o.importFile("data/Concrete_Data.csv")
+concrete <- h2o.importFile("data/Concrete_Data.csv")
+concrete_norm <- as.data.frame(lapply(concrete, normalize))
 
 #training set
-concrete_train <- concrete_norm[1:773, ]
+train <- concrete_norm[1:773, ]
 
 #test set
-concrete_test <- concrete_norm[774:1030, ]
+test <- concrete_norm[774:1030, ]
 
 y = names(train)[9]
 x = names(train)[1:8]

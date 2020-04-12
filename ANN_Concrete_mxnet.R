@@ -1,12 +1,15 @@
 library(mxnet)
-data("BreastCancer")
-BreastCancer = BreastCancer[which(complete.cases(BreastCancer)==TRUE),]
+concrete <- read.csv(file = file.path("data", "Concrete_Data.csv"))
 
-y = as.matrix(BreastCancer[,11])
-y[which(y=="benign")] = 0
-y[which(y=="malignant")] = 1
+normalize <- function(x){
+  return ((x - min(x))/(max(x) - min(x) ))
+}
+
+concrete_norm <- as.data.frame(lapply(concrete, normalize))
+
+y = as.matrix(concrete_norm[,9])
 y = as.numeric(y)
-x = as.numeric(as.matrix(BreastCancer[,2:10]))
+x = as.numeric(as.matrix(concrete_norm[,1:8]))
 x = matrix(as.numeric(x),ncol=9)
 
 train.x = x

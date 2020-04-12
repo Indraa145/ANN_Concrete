@@ -1,4 +1,5 @@
 library(magrittr)
+library(tensorflow)
 library(keras)
 
 normalize <- function(x){
@@ -9,10 +10,15 @@ concrete <- read.csv(file = file.path("data", "Concrete_Data.csv"))
 concrete_norm <- as.data.frame(lapply(concrete, normalize))
 
 #training set
-concrete_train <- concrete_norm[1:773, ]
+tf_train <- concrete_norm[1:773, ]
 
 #test set
-concrete_test <- concrete_norm[774:1030, ]
+tf_test <- concrete_norm[774:1030, ]
+
+X_train = as.matrix(tf_train[,1:8])
+X_test = as.matrix(tf_test[,1:8])
+y_train = as.matrix(tf_train[,9])
+y_test = as.matrix(tf_test[,9])
 
 model <- keras_model_sequential() 
 
