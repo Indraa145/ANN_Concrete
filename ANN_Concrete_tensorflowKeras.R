@@ -17,8 +17,8 @@ tf_test <- concrete_norm[774:1030, ]
 
 X_train = as.matrix(tf_train[,1:8])
 X_test = as.matrix(tf_test[,1:8])
-y_train = as.matrix(tf_train[,9])
-y_test = as.matrix(tf_test[,9])
+Y_train = as.matrix(tf_train[,9])
+Y_test = as.matrix(tf_test[,9])
 
 model <- keras_model_sequential() 
 
@@ -35,13 +35,13 @@ model %>%
   layer_dense(units = 10, activation = 'softmax')
 
 model %>% compile(
-  loss = 'categorical_crossentropy',
+  loss = 'mse',
   optimizer = optimizer_rmsprop(),
   metrics = c('accuracy')
 )
 
 model %>% fit(
   X_train, Y_train, 
-  epochs = 5, batch_size = 32, verbose = 1, 
+  epochs = 100, batch_size = 32, verbose = 1, 
   validation_split = 0.1
 )
